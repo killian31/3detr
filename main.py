@@ -244,7 +244,9 @@ def do_train(
             metrics_dict = ap_calculator.metrics_to_dict(metrics)
             if is_primary():
                 print("==" * 10)
-                print(f"Evaluate Epoch [{epoch}/{args.max_epoch}]; Metrics {metric_str}")
+                print(
+                    f"Evaluate Epoch [{epoch}/{args.max_epoch}]; Metrics {metric_str}"
+                )
                 print("==" * 10)
                 logger.log_scalars(metrics_dict, curr_iter, prefix="Test/")
 
@@ -335,7 +337,9 @@ def main(local_rank, args):
         print(
             "Initializing Distributed Training. This is in BETA mode and hasn't been tested thoroughly. Use at your own risk :)"
         )
-        print("To get the maximum speed-up consider reducing evaluations on val set by setting --eval_every_epoch to greater than 50")
+        print(
+            "To get the maximum speed-up consider reducing evaluations on val set by setting --eval_every_epoch to greater than 50"
+        )
         init_distributed(
             local_rank,
             global_rank=local_rank,

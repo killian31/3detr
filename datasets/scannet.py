@@ -13,15 +13,19 @@ import numpy as np
 import torch
 import utils.pc_util as pc_util
 from torch.utils.data import Dataset
-from utils.box_util import (flip_axis_to_camera_np, flip_axis_to_camera_tensor,
-                            get_3d_box_batch_np, get_3d_box_batch_tensor)
+from utils.box_util import (
+    flip_axis_to_camera_np,
+    flip_axis_to_camera_tensor,
+    get_3d_box_batch_np,
+    get_3d_box_batch_tensor,
+)
 from utils.pc_util import scale_points, shift_scale_points
 from utils.random_cuboid import RandomCuboid
 
 IGNORE_LABEL = -100
 MEAN_COLOR_RGB = np.array([109.8, 97.2, 83.8])
 DATASET_ROOT_DIR = ""  ## Replace with path to dataset
-DATASET_METADATA_DIR = "" ## Replace with path to dataset
+DATASET_METADATA_DIR = ""  ## Replace with path to dataset
 
 
 class ScannetDatasetConfig(object):
@@ -274,9 +278,9 @@ class ScannetDetectionDataset(Dataset):
         sem_seg_labels = np.ones_like(semantic_labels) * IGNORE_LABEL
 
         for _c in self.dataset_config.nyu40ids_semseg:
-            sem_seg_labels[
-                semantic_labels == _c
-            ] = self.dataset_config.nyu40id2class_semseg[_c]
+            sem_seg_labels[semantic_labels == _c] = (
+                self.dataset_config.nyu40id2class_semseg[_c]
+            )
 
         pcl_color = pcl_color[choices]
 

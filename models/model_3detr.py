@@ -11,9 +11,13 @@ from utils.pc_util import scale_points, shift_scale_points
 
 from models.helpers import GenericMLP
 from models.position_embedding import PositionEmbeddingCoordsSine
-from models.transformer import (MaskedTransformerEncoder, TransformerDecoder,
-                                TransformerDecoderLayer, TransformerEncoder,
-                                TransformerEncoderLayer)
+from models.transformer import (
+    MaskedTransformerEncoder,
+    TransformerDecoder,
+    TransformerDecoderLayer,
+    TransformerEncoder,
+    TransformerEncoderLayer,
+)
 
 
 class BoxProcessor(object):
@@ -378,7 +382,7 @@ def build_encoder(args):
             mlp=[args.enc_dim, 256, 256, args.enc_dim],
             normalize_xyz=True,
         )
-        
+
         masking_radius = [math.pow(x, 2) for x in [0.4, 0.8, 1.2]]
         encoder = MaskedTransformerEncoder(
             encoder_layer=encoder_layer,

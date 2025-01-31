@@ -37,8 +37,8 @@ from utils.box_util import (
 
 
 MEAN_COLOR_RGB = np.array([0.5, 0.5, 0.5])  # sunrgbd color is in 0~1
-DATA_PATH_V1 = "" ## Replace with path to dataset
-DATA_PATH_V2 = "" ## Not used in the codebase.
+DATA_PATH_V1 = ""  ## Replace with path to dataset
+DATA_PATH_V2 = ""  ## Not used in the codebase.
 
 
 class SunrgbdDatasetConfig(object):

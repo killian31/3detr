@@ -9,3 +9,9 @@ utils/build/*
 
 # outputs
 outputs/
+
+.DS_Store
+OFFICIAL_SUNRGBD/
+checkpoints/
+download_scannet.py
+metrics/

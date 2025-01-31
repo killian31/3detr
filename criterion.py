@@ -357,9 +357,9 @@ class SetCriterion(nn.Module):
         num_boxes = torch.clamp(all_reduce_average(nactual_gt.sum()), min=1).item()
         targets["nactual_gt"] = nactual_gt
         targets["num_boxes"] = num_boxes
-        targets[
-            "num_boxes_replica"
-        ] = nactual_gt.sum().item()  # number of boxes on this worker for dist training
+        targets["num_boxes_replica"] = (
+            nactual_gt.sum().item()
+        )  # number of boxes on this worker for dist training
 
         loss, loss_dict = self.single_output_forward(outputs["outputs"], targets)
 

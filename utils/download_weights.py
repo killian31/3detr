@@ -2,13 +2,14 @@
 
 
 import os
-from urllib import request
-import torch
 import pickle
+from urllib import request
+
+import torch
 
 ## Define the weights you want and where to store them
-dataset = "scannet"
-encoder = "_masked" # or ""
+dataset = "sunrgbd"
+encoder = "_masked"  # or ""
 epoch = 1080
 base_url = "https://dl.fbaipublicfiles.com/3detr/checkpoints"
 local_dir = "/tmp/"

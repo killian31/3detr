@@ -115,7 +115,7 @@ def train_one_epoch(
 
         # logging
         if is_primary() and curr_iter % args.log_every == 0:
-            mem_mb = torch.cuda.max_memory_allocated() / (1024 ** 2)
+            mem_mb = torch.cuda.max_memory_allocated() / (1024**2)
             eta_seconds = (max_iters - curr_iter) * time_delta.avg
             eta_str = str(datetime.timedelta(seconds=int(eta_seconds)))
             print(
@@ -194,7 +194,7 @@ def evaluate(
         ap_calculator.step_meter(outputs, batch_data_label)
         time_delta.update(time.time() - curr_time)
         if is_primary() and curr_iter % args.log_every == 0:
-            mem_mb = torch.cuda.max_memory_allocated() / (1024 ** 2)
+            mem_mb = torch.cuda.max_memory_allocated() / (1024**2)
             print(
                 f"Evaluate {epoch_str}; Batch [{curr_iter}/{num_batches}]; {loss_str} Iter time {time_delta.avg:0.2f}; Mem {mem_mb:0.2f}MB"
             )
