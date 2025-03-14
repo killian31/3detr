@@ -2,24 +2,25 @@
 
 import argparse
 import os
-import sys
 import pickle
+import sys
 
 import numpy as np
 import torch
 from torch.multiprocessing import set_start_method
 from torch.utils.data import DataLoader, DistributedSampler
 
+from criterion import build_criterion
+
 # 3DETR codebase specific imports
 from datasets import build_dataset
 from engine import evaluate, train_one_epoch
 from models import build_model
 from optimizer import build_optimizer
-from criterion import build_criterion
-from utils.dist import init_distributed, is_distributed, is_primary, get_rank, barrier
-from utils.misc import my_worker_init_fn
-from utils.io import save_checkpoint, resume_if_possible
+from utils.dist import barrier, get_rank, init_distributed, is_distributed, is_primary
+from utils.io import resume_if_possible, save_checkpoint
 from utils.logger import Logger
+from utils.misc import my_worker_init_fn
 
 
 def make_args_parser():
@@ -330,6 +331,12 @@ def test_model(args, model, model_no_ddp, criterion, dataset_config, dataloaders
         print("==" * 10)
         print(f"Test model; Metrics {metric_str}")
         print("==" * 10)
+    # save results to file
+    test_results_file = os.path.join(
+        args.checkpoint_dir, f"test_results_{args.nqueries}.txt"
+    )
+    with open(test_results_file, "w") as fh:
+        fh.write(metric_str)
 
 
 def main(local_rank, args):

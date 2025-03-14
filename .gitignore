@@ -15,3 +15,5 @@ OFFICIAL_SUNRGBD/
 checkpoints/
 download_scannet.py
 metrics/
+sunrgbd_pc_bbox_votes_50k_v2*
+votenet
