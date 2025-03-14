@@ -21,20 +21,20 @@ Date: 2019
 """
 import os
 import sys
+
 import numpy as np
-from torch.utils.data import Dataset
 import scipy.io as sio  # to load .mat files for depth points
+from torch.utils.data import Dataset
 
 import utils.pc_util as pc_util
-from utils.random_cuboid import RandomCuboid
-from utils.pc_util import shift_scale_points, scale_points
 from utils.box_util import (
-    flip_axis_to_camera_tensor,
-    get_3d_box_batch_tensor,
     flip_axis_to_camera_np,
+    flip_axis_to_camera_tensor,
     get_3d_box_batch_np,
+    get_3d_box_batch_tensor,
 )
-
+from utils.pc_util import scale_points, shift_scale_points
+from utils.random_cuboid import RandomCuboid
 
 MEAN_COLOR_RGB = np.array([0.5, 0.5, 0.5])  # sunrgbd color is in 0~1
 DATA_PATH_V1 = ""  ## Replace with path to dataset
@@ -323,8 +323,8 @@ class SunrgbdDetectionDataset(Dataset):
             point_cloud, self.num_points, return_choices=True
         )
 
-        point_cloud_dims_min = point_cloud.min(axis=0)
-        point_cloud_dims_max = point_cloud.max(axis=0)
+        point_cloud_dims_min = point_cloud.min(axis=0)[0:3]
+        point_cloud_dims_max = point_cloud.max(axis=0)[0:3]
 
         mult_factor = point_cloud_dims_max - point_cloud_dims_min
         box_sizes_normalized = scale_points(
