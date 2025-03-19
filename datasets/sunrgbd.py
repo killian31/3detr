@@ -1,7 +1,7 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 
 
-""" 
+"""
 Modified from https://github.com/facebookresearch/votenet
 Dataset for 3D object detection on SUN RGB-D (with support of vote supervision).
 
@@ -360,6 +360,9 @@ class SunrgbdDetectionDataset(Dataset):
         box_corners = box_corners.squeeze(0)
 
         ret_dict = {}
+        ret_dict["original_clouds"] = np.load(scan_path + "_pc.npz")["pc"].astype(
+            np.float32
+        )
         ret_dict["point_clouds"] = point_cloud.astype(np.float32)
         ret_dict["gt_box_corners"] = box_corners.astype(np.float32)
         ret_dict["gt_box_centers"] = box_centers.astype(np.float32)
