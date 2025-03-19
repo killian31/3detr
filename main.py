@@ -132,6 +132,7 @@ def make_args_parser():
     ##### Testing #####
     parser.add_argument("--test_only", default=False, action="store_true")
     parser.add_argument("--visualize", default=None, type=str)
+    parser.add_argument("--index_to_save", default=0, type=int)
     parser.add_argument("--test_ckpt", default=None, type=str)
 
     ##### I/O #####

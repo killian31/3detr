@@ -34,7 +34,8 @@ def visualize(
 
     name_folder = args.checkpoint_dir
     name_folder = os.path.join(name_folder, args.visualize)
-    n_batches_to_save = 1
+
+    index_to_save = args.index_to_save
 
     if os.path.exists(name_folder):
         shutil.rmtree(name_folder)
@@ -60,8 +61,8 @@ def visualize(
     barrier()
 
     for batch_idx, batch_data_label in enumerate(dataset_loader):
-        if batch_idx >= n_batches_to_save:
-            break
+        if batch_idx != index_to_save:
+            continue
         curr_time = time.time()
         for key in batch_data_label:
             batch_data_label[key] = batch_data_label[key].to(net_device)
