@@ -21,6 +21,7 @@ from utils.dist import barrier, get_rank, init_distributed, is_distributed, is_p
 from utils.io import resume_if_possible, save_checkpoint
 from utils.logger import Logger
 from utils.misc import my_worker_init_fn
+from visualize import visualize
 
 
 def make_args_parser():
@@ -130,6 +131,7 @@ def make_args_parser():
 
     ##### Testing #####
     parser.add_argument("--test_only", default=False, action="store_true")
+    parser.add_argument("--visualize", default=None, type=str)
     parser.add_argument("--test_ckpt", default=None, type=str)
 
     ##### I/O #####
@@ -402,6 +404,16 @@ def main(local_rank, args):
         dataloaders[split + "_sampler"] = sampler
 
     if args.test_only:
+        sd = torch.load(args.test_ckpt, map_location=torch.device("cpu"))
+        model_no_ddp.load_state_dict(sd["model"])
+
+        if args.visualize is not None:
+            visualize(
+                args=args,
+                model=model,
+                dataset_config=dataset_config,
+                dataset_loader=dataloaders[dataset_splits[0]],
+            )
         criterion = None  # faster evaluation
         test_model(args, model, model_no_ddp, criterion, dataset_config, dataloaders)
     else:
