@@ -60,6 +60,8 @@ def visualize(
     barrier()
 
     for batch_idx, batch_data_label in enumerate(dataset_loader):
+        if batch_idx >= n_batches_to_save:
+            break
         curr_time = time.time()
         for key in batch_data_label:
             batch_data_label[key] = batch_data_label[key].to(net_device)
@@ -94,9 +96,7 @@ def visualize(
             )
 
             # Create a directory for each element in the batch
-            for i in range(point_cloud.size(0)):
-                if i >= n_batches_to_save:
-                    break
+            for i in tqdm(range(point_cloud.size(0))):
                 element_dir = os.path.join(name_folder, f"element_{batch_idx}_{i}")
                 os.makedirs(element_dir, exist_ok=True)
 
