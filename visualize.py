@@ -9,6 +9,7 @@ import time
 import numpy as np
 import torch
 from torch.distributed.distributed_c10d import reduce
+from tqdm import tqdm
 
 import utils.pc_util as pc_util
 from utils.ap_calculator import APCalculator, flip_axis_to_depth, parse_predictions
@@ -33,6 +34,7 @@ def visualize(
 
     name_folder = args.checkpoint_dir
     name_folder = os.path.join(name_folder, args.visualize)
+    n_batches_to_save = 1
 
     if os.path.exists(name_folder):
         shutil.rmtree(name_folder)
@@ -93,6 +95,8 @@ def visualize(
 
             # Create a directory for each element in the batch
             for i in range(point_cloud.size(0)):
+                if i >= n_batches_to_save:
+                    break
                 element_dir = os.path.join(name_folder, f"element_{batch_idx}_{i}")
                 os.makedirs(element_dir, exist_ok=True)
 
