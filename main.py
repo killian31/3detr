@@ -415,8 +415,11 @@ def main(local_rank, args):
                 dataset_config=dataset_config,
                 dataset_loader=dataloaders[dataset_splits[0]],
             )
-        criterion = None  # faster evaluation
-        test_model(args, model, model_no_ddp, criterion, dataset_config, dataloaders)
+        else:
+            criterion = None  # faster evaluation
+            test_model(
+                args, model, model_no_ddp, criterion, dataset_config, dataloaders
+            )
     else:
         assert (
             args.checkpoint_dir is not None
